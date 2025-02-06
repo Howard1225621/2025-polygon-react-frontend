@@ -1,0 +1,97 @@
+/* 背景改為與 default page 一樣的漸層 */
+.vote-create-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #3b82f6, #9333ea); /* Tailwind: from-blue-500 to-purple-600 */
+    padding: 16px;
+  }
+  
+  /* 標題 */
+  .vote-create-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: white; /* 白色文字，適合漸層背景 */
+  }
+  
+  /* 連結錢包按鈕 */
+  .wallet-button {
+    padding: 10px 16px;
+    background-color: #2563eb; /* Tailwind: bg-blue-600 */
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 16px;
+    border: none;
+  }
+  
+  .wallet-button:hover {
+    background-color: #1d4ed8; /* Tailwind: hover:bg-blue-700 */
+  }
+  
+  /* 表單 */
+  .vote-create-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 24px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e5e7eb; /* Tailwind: border-gray-200 */
+  }
+  
+  /* 表單群組 */
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  /* 標籤 */
+  .form-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151; /* Tailwind: text-gray-700 */
+    margin-bottom: 4px;
+  }
+  
+  /* 文字輸入框 */
+  .form-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #d1d5db; /* Tailwind: border-gray-300 */
+    border-radius: 8px;
+  }
+  
+  /* 文字區域 */
+  .form-textarea {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    height: 80px;
+    resize: vertical;
+  }
+  
+  /* 提交按鈕 */
+  .submit-button {
+    width: 95%;
+    padding: 10px 16px;
+    background-color: #16a34a; /* Tailwind: bg-green-600 */
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+  }
+  
+  .submit-button:hover {
+    background-color: #15803d; /* Tailwind: hover:bg-green-700 */
+  }
+  
+  
