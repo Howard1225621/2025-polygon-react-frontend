@@ -24,7 +24,7 @@ const CONTRACT_ABI = [
 ];
 
 
-export default function VoteSearch() {
+export default function SearchPage() {
   const [voteId, setVoteId] = useState("");
   const [voteData, setVoteData] = useState(null);
   const [error, setError] = useState(null);
@@ -49,7 +49,6 @@ export default function VoteSearch() {
         creator: result[5],
         timestamp: new Date(Number(result[6]) * 1000).toLocaleString()
       });
-      console.log("Contract methods:", contract);
     } catch (err) {
       setError("查詢失敗，請檢查投票 ID 是否正確");
       setVoteData(null);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
+import '../css/createvote.css';
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_IPFSCreateVote_Address; // 智慧合約地址
 const CONTRACT_ABI = [
@@ -22,7 +23,7 @@ const CONTRACT_ABI = [
 const pinataApiKey = process.env.REACT_APP_PINATA_API_KEY;
 const pinataSecret = process.env.REACT_APP_PINATA_SECRET_API_KEY;
 
-export default function CreateVote() {
+export default function TryupCreateVote() {
   console.log("Contract Address:", CONTRACT_ADDRESS);
     const [formData, setFormData] = useState({
       title: "",
@@ -110,43 +111,42 @@ export default function CreateVote() {
     };
     
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-        <h2 className="text-2xl font-bold mb-4">Create a New Vote</h2>
-        <button
-          onClick={connectWallet}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 mb-4"
-        >
+      <div className="vote-create-container">
+        <h2 className="vote-create-title">Create a New Vote</h2>
+
+        <button onClick={connectWallet} className="wallet-button">
           {walletAddress ? "Connected" : "Connect Wallet"}
         </button>
-        <form onSubmit={createVote} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-          <div className="mb-4">
-            <label className="block text-gray-700">Title</label>
-            <input type="text" name="title" value={formData.title} onChange={handleChange} className="w-full p-2 border rounded" required />
+
+        <form onSubmit={createVote} className="vote-create-form">
+          <div className="form-group">
+            <label className="form-label">Title</label>
+            <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-input" required />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Candidate A</label>
-            <input type="text" name="candidateA" value={formData.candidateA} onChange={handleChange} className="w-full p-2 border rounded" required />
+
+          <div className="form-group">
+            <label className="form-label">Candidate A</label>
+            <input type="text" name="candidateA" value={formData.candidateA} onChange={handleChange} className="form-input" required />
           </div>
-          
-          <div className="mb-4">
-            <label className="block text-gray-700">Candidate A Description</label>
-            <textarea name="descriptionA" value={formData.descriptionA} onChange={handleChange} className="w-full p-2 border rounded" required />
+
+          <div className="form-group">
+            <label className="form-label">Candidate A Description</label>
+            <textarea name="descriptionA" value={formData.descriptionA} onChange={handleChange} className="form-textarea" required />
           </div>
-          
-          <div className="mb-4">
-            <label className="block text-gray-700">Candidate B</label>
-            <input type="text" name="candidateB" value={formData.candidateB} onChange={handleChange} className="w-full p-2 border rounded" required />
+
+          <div className="form-group">
+            <label className="form-label">Candidate B</label>
+            <input type="text" name="candidateB" value={formData.candidateB} onChange={handleChange} className="form-input" required />
           </div>
-          
-          <div className="mb-4">
-            <label className="block text-gray-700">Candidate B Description</label>
-            <textarea name="descriptionB" value={formData.descriptionB} onChange={handleChange} className="w-full p-2 border rounded" required />
+
+          <div className="form-group">
+            <label className="form-label">Candidate B Description</label>
+            <textarea name="descriptionB" value={formData.descriptionB} onChange={handleChange} className="form-textarea" required />
           </div>
-        
-          <button type="submit" className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700">
-            Create Vote
-          </button>
+
+          <button type="submit" className="submit-button">Create Vote</button>
         </form>
       </div>
+
     );
   }

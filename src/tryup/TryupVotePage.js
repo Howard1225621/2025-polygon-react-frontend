@@ -26,15 +26,13 @@ const VOTING_CONTRACT_ABI = [
   {
     "constant": false,
     "inputs": [
-      { "name": "_voteId", "type": "uint256" },
-      { "name": "_candidate", "type": "uint8" }
+      { "name": "_id", "type": "uint256" },
+      { "name": "_candidateIndex", "type": "uint256" }
     ],
     "name": "vote",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "outputs": [{ "name": "", "type": "bool" }],
     "type": "function"
   }
-  
 ];
 
 export default function VotePage() {
@@ -54,28 +52,15 @@ export default function VotePage() {
       fetchDescriptions();
     }
   }, [voteData]); // 確保只在voteData有變動時呼叫
-  
+
   const connectWallet = async () => {
     if (!window.ethereum) {
       alert("請安裝 MetaMask 來使用此功能");
       return;
     }
-  
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum); // 改用 Web3Provider
-      const _signer = await provider.getSigner();
-  
-      // 檢查 signer 是否正確獲得
-      const address = await _signer.getAddress();
-      console.log("已成功連接錢包，地址:", address);
-      
-      setSigner(_signer);
-      alert("錢包連接成功！"); // 顯示成功提示
-  
-    } catch (error) {
-      console.error("連接錢包失敗:", error);
-      alert("錢包連接失敗，請再試一次！");
-    }
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const _signer = await provider.getSigner();
+    setSigner(_signer);
   };
 
   const fetchVoteInfo = async () => {
@@ -114,7 +99,6 @@ export default function VotePage() {
     }
   };
 
-  /**
   const vote = async (candidateIndex) => {
     if (!signer) {
       alert("請先連接錢包！");
@@ -130,40 +114,7 @@ export default function VotePage() {
       alert("投票失敗，請再試一次！");
     }
   };
-  */
 
-  
-  const vote = async (candidateIndex) => {
-    if (!signer) {
-      alert("請先連接錢包！");
-      return;
-    }
-    
-    try {
-      const contract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
-      /** 
-      const gasEstimate = await contract.estimateGas.vote(id, candidateIndex);
-      console.log("Gas Estimate: ", gasEstimate);
-      */
-      const tx = await contract.vote(id, candidateIndex);
-      await tx.wait();
-      alert("投票成功！");
-    } catch (err) {
-      console.log("Voting contract address:", VOTING_CONTRACT_ADDRESS);
-      console.log("Voting contract ABI:", VOTING_CONTRACT_ABI);
-      console.log("Voting contract signer:", signer);
-
-      const contract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
-
-      // 打印所有合約方法
-      console.log("Contract methods:", contract);
-      console.log(id,candidateIndex);
-      console.error("投票失敗:", err);
-      alert("投票失敗，請再試一次！");
-    }
-  };
-  
-  
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <h1 className="text-3xl font-bold">投票詳情</h1>
@@ -209,4 +160,3 @@ export default function VotePage() {
     </div>
   );
 }
-
