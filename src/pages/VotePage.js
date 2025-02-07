@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ethers } from "ethers";
 import styles from "../css/VotePage.module.css"; // 引入 CSS Modules
@@ -25,27 +26,78 @@ const CONTRACT_ABI = [
 ];
 const VOTING_CONTRACT_ABI = [
   {
-    "constant": false,
     "inputs": [
-      { "name": "_voteId", "type": "uint256" },
-      { "name": "_candidate", "type": "uint8" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "hasVoted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_voteId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_candidate",
+        "type": "uint8"
+      }
     ],
     "name": "vote",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  }
-  
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_voteId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getResults",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "candidateACount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "candidateBCount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
 ];
 
 export default function VotePage() {
   const { id } = useParams(); // 取得 URL 中的 id
   const [voteData, setVoteData] = useState(null);
+  const [results, setResults] = useState({ candidateACount: 0, candidateBCount: 0 });
   const [error, setError] = useState(null);
   const [walletAddress, setWalletAddress] = useState("");
   const [signer, setSigner] = useState(null); // ⭐ 新增 signer 狀態
   const [descriptionA, setDescriptionA] = useState(""); // ⭐ 新增候選人A描述
   const [descriptionB, setDescriptionB] = useState(""); // ⭐ 新增候選人B描述
+  const [showResults, setShowResults] = useState(false); // 用來控制是否顯示結果
 
   useEffect(() => {
     fetchVoteInfo();
@@ -127,30 +179,48 @@ export default function VotePage() {
       alert("請先連接錢包！");
       return;
     }
-    
+
     try {
       const contract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
       const tx = await contract.vote(id, candidateIndex);
       await tx.wait();
       alert("投票成功！");
     } catch (err) {
-      console.log("Voting contract address:", VOTING_CONTRACT_ADDRESS);
-      console.log("Voting contract ABI:", VOTING_CONTRACT_ABI);
-      console.log("Voting contract signer:", signer);
-
-      const contract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
-
-      // 打印所有合約方法
-      console.log("Contract methods:", contract);
-      console.log(id,candidateIndex);
-      console.error("投票失敗:", err);
-      alert("投票失敗，請再試一次！");
+      alert(err.reason);
     }
   };
   
-  
+  const navigate = useNavigate();
+
+  const fetchResults = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const contract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, provider);
+      
+      const voteId = id; // 替換成真實的 voteId
+      const [candidateACount, candidateBCount] = await contract.getResults(voteId);
+
+      setResults({
+        candidateACount: candidateACount.toString(),
+        candidateBCount: candidateBCount.toString(),
+      });
+      setShowResults(true); // 顯示結果
+    } catch (err) {
+      setError("無法獲取投票結果");
+      console.error(err);
+    }
+  };
+
   return (
     <div className={styles.container}>
+      <div className={styles.buttonContainer}>
+        <button className={`${styles.back} ${styles.tomainpagebutton}`} onClick={() => navigate(-2)}>
+          返回主頁
+        </button>
+        <button className={`${styles.back}`} onClick={() => navigate(-1)}>
+          返回查詢
+        </button>
+      </div>
       <h1 className={styles.title}>投票詳情</h1>
       <button onClick={connectWallet} className={styles.walletButton}>
         {walletAddress ? "Connected" : "Connect Wallet"}
@@ -178,7 +248,19 @@ export default function VotePage() {
 
           <p className={styles.voteInfo}>創建者: {voteData.creator}</p>
           <p className={styles.voteInfo}>時間: {voteData.timestamp}</p>
+          {/* 查看結果按鈕 */}
+          <button onClick={fetchResults} className={styles.viewResultsButton}>
+            查看投票結果
+          </button>
+          {/* 顯示投票結果 */}
+          {showResults && (
+            <div className={styles.results}>
+              <p>候選人 A 投票數：{results.candidateACount}</p>
+              <p>候選人 B 投票數：{results.candidateBCount}</p>
+            </div>
+          )}
         </div>
+        
       )}
     </div>
   );

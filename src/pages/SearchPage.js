@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from "react";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
+import styles from '../css/SearchPage.module.css';
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_VoteReader_Address;
 const CONTRACT_ABI = [
@@ -57,32 +58,34 @@ export default function VoteSearch() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">投票查詢</h1>
-      <div className="bg-white p-6 rounded-xl shadow-md flex space-x-2">
+    <div className={styles.container}>
+      <button className={`${styles.backtomainpagebutton}`} onClick={() => navigate(-1)}>
+            返回主頁
+      </button>
+      <h1 className={styles.title}>投票查詢</h1>
+      <div className={styles.inputBox}>
         <input
           type="number"
-          className="border p-2 rounded-md w-60"
+          className={styles.input}
           placeholder="輸入投票 ID"
           value={voteId}
           onChange={(e) => setVoteId(e.target.value)}
         />
-        <button onClick={fetchVote} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+        <button onClick={fetchVote} className={styles.buttonPrimary}>
           查詢
         </button>
       </div>
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
       {voteData && (
-        /**<div className="mt-6 bg-white p-4 rounded-xl shadow-md w-80"></div>*/
         <button
           onClick={() => navigate(`/vote/${voteId}`)}
-          className="mt-6 bg-white p-6 rounded-xl shadow-md w-80 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-50"
+          className={styles.voteCard}
         >
-          <h2 className="text-xl font-bold">{voteData.title}</h2>
-          <p className="mt-2">🟢 候選人 A: {voteData.candidateA}</p>
+          <h2 className={styles.voteTitle}>{voteData.title}</h2>
+          <p>🟢 候選人 A: {voteData.candidateA}</p>
           <p>🔵 候選人 B: {voteData.candidateB}</p>
-          <p className="text-sm text-gray-500 mt-2">創建者: {voteData.creator}</p>
-          <p className="text-sm text-gray-500">時間: {voteData.timestamp}</p>
+          <p className={styles.voteInfo}>創建者: {voteData.creator}</p>
+          <p className={styles.voteInfo}>時間: {voteData.timestamp}</p>
         </button>
       )}
     </div>

@@ -6,10 +6,6 @@ import CreateVote from './pages/CreateVote';
 import VotePage from './pages/VotePage';
 
 
-import Tryup from './tryup/TryupSearchPage';
-import TryupCreateVote from './tryup/TryupCreateVote';
-import TryupSearchPage from './tryup/TryupSearchPage';
-
 function App() {
   return (
     <Router>  {/* 用 Router 包裹 Routes */}
@@ -20,10 +16,6 @@ function App() {
           <Route path="/createvote" element={<CreateVote />} />
           <Route path="/vote/:id" element={<VotePage />} />
 
-          <Route path="/tryup/createvote" element={<TryupCreateVote />} />
-          <Route path="/tryupsearch" element={<TryupSearchPage />} />
-          
-          <Route path="/tryup" element={<Tryup />} />
           
         </Routes>
     </Router>
@@ -31,35 +23,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-/**import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-*/

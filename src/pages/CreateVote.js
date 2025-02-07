@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
-import '../css/createvote.css';
+import { useNavigate } from "react-router-dom";
+import styles from '../css/CreateVote.module.css';
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_IPFSCreateVote_Address; // 智慧合約地址
 const CONTRACT_ABI = [
@@ -109,44 +110,49 @@ export default function CreateVote() {
         console.error("Error creating vote:", error);
       }
     };
+
+    const navigate = useNavigate();
     
     return (
-      <div className="vote-create-container">
-        <h2 className="vote-create-title">Create a New Vote</h2>
+      <div className={styles.votecreatecontainer}>
+      <button className={`${styles.backtomainpagebutton}`} onClick={() => navigate(-1)}>
+            返回主頁
+      </button>
+      <h2 className={styles.votecreatetitle}>Create a New Vote</h2>
 
-        <button onClick={connectWallet} className="wallet-button">
-          {walletAddress ? "Connected" : "Connect Wallet"}
-        </button>
+      <button onClick={connectWallet} className={styles.walletbutton}>
+        {walletAddress ? "Connected" : "Connect Wallet"}
+      </button>
 
-        <form onSubmit={createVote} className="vote-create-form">
-          <div className="form-group">
-            <label className="form-label">Title</label>
-            <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-input" required />
-          </div>
+      <form onSubmit={createVote} className={styles.votecreateform}>
+        <div className={styles.formgroup}>
+          <label className={styles.formlabel}>Title</label>
+          <input type="text" name="title" value={formData.title} onChange={handleChange} className={styles.forminput} required />
+        </div>
 
-          <div className="form-group">
-            <label className="form-label">Candidate A</label>
-            <input type="text" name="candidateA" value={formData.candidateA} onChange={handleChange} className="form-input" required />
-          </div>
+        <div className={styles.formgroup}>
+          <label className={styles.formlabel}>Candidate A</label>
+          <input type="text" name="candidateA" value={formData.candidateA} onChange={handleChange} className={styles.forminput} required />
+        </div>
 
-          <div className="form-group">
-            <label className="form-label">Candidate A Description</label>
-            <textarea name="descriptionA" value={formData.descriptionA} onChange={handleChange} className="form-textarea" required />
-          </div>
+        <div className={styles.formgroup}>
+          <label className={styles.formlabel}>Candidate A Description</label>
+          <textarea name="descriptionA" value={formData.descriptionA} onChange={handleChange} className={styles.formTextarea} required />
+        </div>
 
-          <div className="form-group">
-            <label className="form-label">Candidate B</label>
-            <input type="text" name="candidateB" value={formData.candidateB} onChange={handleChange} className="form-input" required />
-          </div>
+        <div className={styles.formgroup}>
+          <label className={styles.formlabel}>Candidate B</label>
+          <input type="text" name="candidateB" value={formData.candidateB} onChange={handleChange} className={styles.forminput} required />
+        </div>
+        
+        <div className={styles.formgroup}>
+          <label className={styles.formlabel}>Candidate B Description</label>
+          <textarea name="descriptionB" value={formData.descriptionB} onChange={handleChange} className={styles.formTextarea} required />
+        </div>
 
-          <div className="form-group">
-            <label className="form-label">Candidate B Description</label>
-            <textarea name="descriptionB" value={formData.descriptionB} onChange={handleChange} className="form-textarea" required />
-          </div>
-
-          <button type="submit" className="submit-button">Create Vote</button>
-        </form>
-      </div>
+        <button type="submit" className={styles.submitButton}>Create Vote</button>
+      </form>
+    </div>
 
     );
   }

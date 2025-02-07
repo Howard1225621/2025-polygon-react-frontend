@@ -1,0 +1,103 @@
+/* 設定整個頁面的背景 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #3b82f6, #9333ea);
+    padding: 16px;
+  }
+  
+  /* 標題樣式 */
+  .title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 16px;
+  }
+  
+  /* 輸入框區域 */
+  .inputBox {
+    display: flex;
+    gap: 12px;
+    background-color: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 輸入框 */
+  .input {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    border-radius: 8px;
+    width: 200px;
+  }
+  
+  /* 主要按鈕 */
+  .buttonPrimary {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .buttonPrimary:hover {
+    background-color: #1d4ed8;
+  }
+
+  /* 返回主頁按鈕 */
+  .backtomainpagebutton{
+    background-color: #030813;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* 錯誤訊息 */
+  .error {
+    color: #dc2626;
+    margin-top: 12px;
+  }
+  
+  /* 投票資訊卡片 */
+  .voteCard {
+    margin-top: 16px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 400px;
+    text-align: center;
+  }
+  
+  .voteCard:hover {
+    background-color: #f9fafb;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* 投票標題 */
+  .voteTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  /* 投票資訊 */
+  .voteInfo {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+  
+  
+  

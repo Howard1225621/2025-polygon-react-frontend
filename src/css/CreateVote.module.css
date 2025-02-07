@@ -1,5 +1,5 @@
 /* 背景改為與 default page 一樣的漸層 */
-.vote-create-container {
+.votecreatecontainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
   }
   
   /* 標題 */
-  .vote-create-title {
+  .votecreatetitle {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 16px;
@@ -18,7 +18,7 @@
   }
   
   /* 連結錢包按鈕 */
-  .wallet-button {
+  .walletbutton {
     padding: 10px 16px;
     background-color: #2563eb; /* Tailwind: bg-blue-600 */
     color: white;
@@ -30,12 +30,12 @@
     border: none;
   }
   
-  .wallet-button:hover {
+  .walletbutton:hover {
     background-color: #1d4ed8; /* Tailwind: hover:bg-blue-700 */
   }
   
   /* 表單 */
-  .vote-create-form {
+  .votecreateform {
     width: 100%;
     max-width: 400px;
     padding: 24px;
@@ -46,12 +46,12 @@
   }
   
   /* 表單群組 */
-  .form-group {
+  .formgroup {
     margin-bottom: 16px;
   }
   
   /* 標籤 */
-  .form-label {
+  .formlabel {
     display: block;
     font-size: 16px;
     font-weight: 600;
@@ -60,7 +60,7 @@
   }
   
   /* 文字輸入框 */
-  .form-input {
+  .forminput {
     width: 90%;
     padding: 10px;
     border: 1px solid #d1d5db; /* Tailwind: border-gray-300 */
@@ -68,7 +68,7 @@
   }
   
   /* 文字區域 */
-  .form-textarea {
+  .formTextarea {
     width: 90%;
     padding: 10px;
     border: 1px solid #d1d5db;
@@ -78,7 +78,7 @@
   }
   
   /* 提交按鈕 */
-  .submit-button {
+  .submitButton {
     width: 95%;
     padding: 10px 16px;
     background-color: #16a34a; /* Tailwind: bg-green-600 */
@@ -90,8 +90,19 @@
     border: none;
   }
   
-  .submit-button:hover {
+  .submitButton:hover {
     background-color: #15803d; /* Tailwind: hover:bg-green-700 */
+  }
+
+  /* 返回主頁按鈕 */
+  .backtomainpagebutton{
+    background-color: #030813;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
   
   
