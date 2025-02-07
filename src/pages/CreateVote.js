@@ -23,7 +23,7 @@ const CONTRACT_ABI = [
 const pinataApiKey = process.env.REACT_APP_PINATA_API_KEY;
 const pinataSecret = process.env.REACT_APP_PINATA_SECRET_API_KEY;
 
-export default function TryupCreateVote() {
+export default function CreateVote() {
   console.log("Contract Address:", CONTRACT_ADDRESS);
     const [formData, setFormData] = useState({
       title: "",

@@ -1,5 +1,5 @@
 /* 設定整個頁面的背景 */
-.vote-container {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,7 @@
 }
 
 /* 白色內容框 */
-.vote-box {
+.box {
   width: 100%;
   max-width: 400px;
   padding: 24px;
@@ -22,7 +22,7 @@
 }
 
 /* 標題樣式 */
-.vote-title {
+.title {
   font-size: 24px;
   font-weight: 800;
   color: #1f2937; /* Tailwind: text-gray-800 */
@@ -30,20 +30,20 @@
 }
 
 /* 描述文字 */
-.vote-description {
+.description {
   font-size: 18px;
   color: #4b5563; /* Tailwind: text-gray-600 */
   margin-bottom: 24px;
 }
 
 /* 按鈕區塊 */
-.vote-buttons {
+.buttons {
   display: flex;
   gap: 16px;
 }
 
 /* 按鈕通用樣式 */
-.vote-button {
+.button {
   flex: 1;
   font-weight: 600;
   padding: 10px 16px;
@@ -53,26 +53,27 @@
 }
 
 /* 主要按鈕（藍色） */
-.vote-button-primary {
+.buttonPrimary {
   background-color: #2563eb; /* Tailwind: bg-blue-600 */
   color: white;
   border: none;
 }
 
-.vote-button-primary:hover {
+.buttonPrimary:hover {
   background-color: #1d4ed8; /* Tailwind: hover:bg-blue-700 */
 }
 
 /* 次要按鈕（灰色邊框） */
-.vote-button-secondary {
+.buttonSecondary {
   border: 1px solid #9ca3af; /* Tailwind: border-gray-400 */
   color: #374151; /* Tailwind: text-gray-700 */
   background-color: white;
 }
 
-.vote-button-secondary:hover {
+.buttonSecondary:hover {
   background-color: #f3f4f6; /* Tailwind: hover:bg-gray-100 */
 }
+
 
 
   

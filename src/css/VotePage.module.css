@@ -1,0 +1,118 @@
+/* 背景與整體布局 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #3b82f6, #9333ea);
+    padding: 16px;
+}
+
+/* 標題樣式 */
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+}
+
+/* 錢包按鈕 */
+.walletButton {
+    padding: 10px 16px;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 16px;
+    border: none;
+}
+
+.walletButton:hover {
+    background-color: #1d4ed8;
+}
+
+/* 錯誤訊息 */
+.errorMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* 投票卡片 */
+.voteCard {
+    width: 100%;
+    max-width: 400px;
+    padding: 24px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+/* 候選人卡片 */
+.candidateCard {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.candidateA {
+    background-color: #f0fdf4;
+}
+
+.candidateB {
+    background-color: #eff6ff;
+}
+
+.candidateName {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.candidateDescription {
+    font-size: 14px;
+    color: #374151;
+    margin-top: 8px;
+}
+
+/* 投票按鈕 */
+.voteButton {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+    margin-top: 8px;
+}
+
+.voteButtonA {
+    background-color: #16a34a;
+}
+
+.voteButtonA:hover {
+    background-color: #15803d;
+}
+
+.voteButtonB {
+    background-color: #2563eb;
+}
+
+.voteButtonB:hover {
+    background-color: #1d4ed8;
+}
+
+/* 其他資訊 */
+.voteInfo {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 8px;
+}
+

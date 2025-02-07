@@ -8,7 +8,6 @@ import VotePage from './pages/VotePage';
 
 import Tryup from './tryup/TryupSearchPage';
 import TryupCreateVote from './tryup/TryupCreateVote';
-import TryupDefaultPage from './tryup/TryupDefaultPage';
 import TryupSearchPage from './tryup/TryupSearchPage';
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
           <Route path="/vote/:id" element={<VotePage />} />
 
           <Route path="/tryup/createvote" element={<TryupCreateVote />} />
-          <Route path="/tryupdefault" element={<TryupDefaultPage />} />
           <Route path="/tryupsearch" element={<TryupSearchPage />} />
           
           <Route path="/tryup" element={<Tryup />} />
