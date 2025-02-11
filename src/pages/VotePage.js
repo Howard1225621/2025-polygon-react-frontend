@@ -228,7 +228,7 @@ export default function VotePage() {
       const polAmount = (usdAmount / polPrice)*2; // 計算 POL 數量 //調整為0.002 USD才不會因為計算問題又出現insufficient POL
 
       // 轉換成 Wei（假設 POL 的最小單位是 10^18）
-      const valueInWei = ethers.parseUnits((polAmount).toString(), 17); 
+      const valueInWei = ethers.parseUnits(polAmount.toFixed(6), 18); 
 
       console.log(`需要支付的 POL 數量: ${polAmount}`);
       console.log(`轉換成 Wei 後的值: ${valueInWei.toString()}`);
@@ -256,7 +256,7 @@ export default function VotePage() {
       console.log(valueInWei);
       
 
-      const payTx = await signerContract.pay(ethers.parseUnits(usdAmount.toString(), 17), { value: valueInWei });
+      const payTx = await signerContract.pay(ethers.parseUnits(usdAmount.toString(), 18), { value: valueInWei });
       await payTx.wait();
       console.log("付款成功！");
       
