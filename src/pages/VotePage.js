@@ -190,7 +190,7 @@ export default function VotePage() {
       const userAddress = signer.getAddress();
 
       // 創建投票合約實例
-      const votingcheck = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, provider);
+      const votingcheck = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
 
       // 調用 `hasVoted` 函數來檢查使用者是否已經投票
       const hasVoted = await votingcheck.hasVoted(id, userAddress);
