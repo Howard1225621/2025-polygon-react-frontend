@@ -7,6 +7,7 @@ import styles from "../css/VotePage.module.css"; // 引入 CSS Modules
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_VoteReader_Address;
 const VOTING_CONTRACT_ADDRESS = process.env.REACT_APP_Voting_Address;
+const POLPAYMENT_CONTRACT_ADDRESS = process.env.REACT_APP_PolPayment_Address;
 const CONTRACT_ABI = [
   {
     "constant": true,
@@ -27,6 +28,11 @@ const CONTRACT_ABI = [
 const VOTING_CONTRACT_ABI = [
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "",
@@ -173,7 +179,6 @@ export default function VotePage() {
     }
   };
 
-  
   const vote = async (candidateIndex) => {
     if (!signer) {
       alert("請先連接錢包！");
@@ -181,12 +186,90 @@ export default function VotePage() {
     }
 
     try {
-      const contract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
-      const tx = await contract.vote(id, candidateIndex);
-      await tx.wait();
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const userAddress = signer.getAddress();
+
+      // 創建投票合約實例
+      const votingContract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, provider);
+
+      // 調用 `hasVoted` 函數來檢查使用者是否已經投票
+      const hasVoted = await votingContract.hasVoted(id, userAddress);
+      // 調用 `hasVoted` 函數來檢查使用者是否已經投票
+
+      if (hasVoted) {
+          alert("You have already voted in this poll!");
+          return;
+      } else {
+          alert("You have not voted yet. You can participate!");
+      }
+      
+      // 🔹 1️⃣ 取得最新 POL/USD 匯率
+      const paymentContract = new ethers.Contract(
+        POLPAYMENT_CONTRACT_ADDRESS, // ⬅ 替換成你的 POL 合約地址
+        [
+          {
+            "inputs": [],
+            "name": "getLatestPrice",
+            "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+            "stateMutability": "view",
+            "type": "function"
+          }
+        ],
+        provider
+      );
+
+      const latestPrice = await paymentContract.getLatestPrice();
+      const polPrice = Number(latestPrice) / 1e8; // Chainlink 給的價格有 8 位小數
+
+      console.log(`POL/USD 匯率: ${polPrice}`);
+
+      // 🔹 2️⃣ 計算 0.1 USD 需要多少 POL
+      const usdAmount = 0.001; // 0.001 USD
+      const polAmount = (usdAmount / polPrice)*2; // 計算 POL 數量 //調整為0.002 USD才不會因為計算問題又出現insufficient POL
+
+      // 轉換成 Wei（假設 POL 的最小單位是 10^18）
+      const valueInWei = ethers.parseUnits((polAmount).toString(), 18); 
+
+      console.log(`需要支付的 POL 數量: ${polAmount}`);
+      console.log(`轉換成 Wei 後的值: ${valueInWei.toString()}`);
+
+      // 🔹 3️⃣ 提示使用者確認付款
+      const isConfirmed = window.confirm(`你即將支付 ${polAmount} POL (約 0.002 USD)作為額外費用，確定要投票嗎？`);
+      if (!isConfirmed) return;
+
+
+      // 🔹 4️⃣ 執行付款交易（pay function）
+      const signerContract = new ethers.Contract(
+        POLPAYMENT_CONTRACT_ADDRESS,
+        [
+          {
+            "inputs": [{ "internalType": "uint256", "name": "usdAmount", "type": "uint256" }],
+            "name": "pay",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+          }
+        ],
+        signer
+      );
+      
+      console.log(valueInWei);
+      
+
+      const payTx = await signerContract.pay(ethers.parseUnits(usdAmount.toString(), 18), { value: valueInWei });
+      await payTx.wait();
+      console.log("付款成功！");
+      
+
+      // 🔹 5️⃣ 付款成功後，再執行投票
+      //const votingContract = new ethers.Contract(VOTING_CONTRACT_ADDRESS, VOTING_CONTRACT_ABI, signer);
+      const voteTx = await votingContract.vote(id, candidateIndex);
+      await voteTx.wait();
+
       alert("投票成功！");
     } catch (err) {
-      alert(err.reason);
+      alert(err.reason || "交易失敗，請再試一次！");
+      console.error(err);
     }
   };
   
